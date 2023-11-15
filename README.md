@@ -11,5 +11,6 @@ To Review:
 - [ ] review blending
 - [ ] RANSAC method
 
+Maybe meet Saturday 2-3, for checkins 
 
 ** DUE DATE: December 13th, 2023 **
