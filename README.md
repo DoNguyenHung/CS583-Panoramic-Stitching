@@ -10,3 +10,6 @@ To Review:
 - [ ] review image pyramid stuff
 - [ ] review blending
 - [ ] RANSAC method
+
+
+** DUE DATE: December 13th, 2023 **
