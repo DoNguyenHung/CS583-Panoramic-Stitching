@@ -2,7 +2,7 @@
 
 To Do:
 - [X] Take pictures for part 1 (Ramona)
-- [ ] Add in the hard coded point correspondences (Ramona)
+- [X] Add in the hard coded point correspondences (Ramona)
 - [X] Build Tex file for submission (Ramona)
 
 To Review:
