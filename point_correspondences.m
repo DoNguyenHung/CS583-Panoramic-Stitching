@@ -49,16 +49,20 @@ withptslft = insertShape(left, "filled-circle", [branchlft(1),branchlft(2),10], 
 withptslft = insertShape(withptslft, "filled-circle", [rocklft(1),rocklft(2),10], ShapeColor=['magenta'], Opacity=1);
 withptslft = insertShape(withptslft, "filled-circle", [signlft(1),signlft(2),10], ShapeColor=['green'], Opacity=1);
 withptslft = insertShape(withptslft, "filled-circle", [leaflft(1),leaflft(2),10], ShapeColor=['cyan'], Opacity=1);
-f6 = figure('Name', 'Bike Path Left with Points');
-imshow(withptslft)
+%f6 = figure('Name', 'Bike Path Left with Points');
+%imshow(withptslft)
 
 withptsrgt = insertShape(right, "filled-circle", [branchrgt(1),branchrgt(2),10], ShapeColor=['red'], Opacity=1);
 withptsrgt = insertShape(withptsrgt, "filled-circle", [rockrgt(1),rockrgt(2),10], ShapeColor=['magenta'], Opacity=1);
 withptsrgt = insertShape(withptsrgt, "filled-circle", [signrgt(1),signrgt(2),10], ShapeColor=['green'], Opacity=1);
 withptsrgt = insertShape(withptsrgt, "filled-circle", [leafrgt(1),leafrgt(2),10], ShapeColor=['cyan'], Opacity=1);
-f7 = figure('Name', 'Bike Path Right with Points');
-imshow(withptsrgt)
+%f7 = figure('Name', 'Bike Path Right with Points');
+%imshow(withptsrgt)
 
+f8 = figure('Name', 'Together');
+together = [withptslft, withptsrgt];
+imshow(together);
 
 %imwrite(withptslft, 'bikepathleft_wpts.jpg')
 %imwrite(withptsrgt, 'bikepathright_wpts.jpg')
+%imwrite(together, 'bikepath_wpts_together.jpg')
