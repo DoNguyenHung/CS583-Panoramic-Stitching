@@ -15,6 +15,7 @@
 % Part 3: Week 4: Keypoints
 
 clear all;
+alpha = 0.3;
 
 im_left = imread('bikepath_left.jpg');
 im_right = imread('bikepath_right.jpg');
@@ -88,3 +89,53 @@ minx = min([corner1(2), corner2(2), corner3(2), corner4(2), corner1p(2), corner2
 
 newHeight = round(maxy - miny);
 newWidth = round(maxx - minx);
+
+final_im = zeros(newHeight, newWidth);
+
+for r = 1:size(final_im, 1)
+    for c = 1:size(final_im, 2)
+        useRightIm = 0;
+        useLeftIm = 1;
+
+        canvasloc = [r; c; 1];
+        baseloc = canvasloc + [miny - 1; minx - 1; 0];
+        % disp(baseloc);
+        % disp("\\")
+
+        if baseloc(1) >= 1 && baseloc(2) >= 1 && baseloc(2) <= size(im_right, 2) && baseloc(1) <= size(im_right, 1)
+            useRightIm = 1;
+        end
+        
+        otherloc = (inv(M)) * baseloc;
+        % disp(otherloc);
+        % disp("\\")
+        if otherloc(1) < 1 || otherloc(2) < 1 || otherloc(1) > size(im_left, 1) || otherloc(2) > size(im_left, 2)
+            useLeftIm = 0;
+        end
+
+        if useRightIm == 1 && useLeftIm == 0
+            % disp(baseloc);
+            % disp("\\")
+            final_im(r, c, 1) = im_right(int32(baseloc(1)), int32(baseloc(2)), 1);
+            final_im(r, c, 2) = im_right(int32(baseloc(1)), int32(baseloc(2)), 2);
+            final_im(r, c, 3) = im_right(int32(baseloc(1)), int32(baseloc(2)), 3);
+        end
+
+        if useLeftIm == 1 && useRightIm == 0
+            % disp(leftloc);
+            % disp("\\")
+            final_im(r, c, 1) = im_left(int32(otherloc(1)), int32(otherloc(2)), 1);
+            final_im(r, c, 2) = im_left(int32(otherloc(1)), int32(otherloc(2)), 2);
+            final_im(r, c, 3) = im_left(int32(otherloc(1)), int32(otherloc(2)), 3);
+        end
+
+        if useLeftIm == 1 && useRightIm == 1
+            final_im(r, c, 1) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 1) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 1);
+            final_im(r, c, 2) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 2) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 2);
+            final_im(r, c, 3) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 3) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 3);
+        end
+    end
+end
+
+imshow(final_im);
+
