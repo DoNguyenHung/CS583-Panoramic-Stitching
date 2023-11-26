@@ -34,6 +34,10 @@ end
 tmp_iml = gray_left(:,:);
 tmp_filter = gray_left(:,:);
 
+f1 = figure('Name', 'Bike Path Image Pyramid');
+
+hold on
+pos = 1;
 for oct=1:4
     if oct==1
         for col=1:size(scales,2)
@@ -44,8 +48,12 @@ for oct=1:4
             end
             tmp_filter = imgaussfilt(tmp_iml, sigma, FilterSize=kern);
             DoG = tmp_iml - tmp_filter;
-            imwrite(tmp_filter, sprintf('./im_pyramids_bikeleft/GAUSoct%d_scale%d.jpg', oct, col));
-            imwrite(DoG, sprintf('./im_pyramids_bikeleft/DoG_oct%d_scale%d.jpg', oct, col));
+
+            subplot(4,5,pos), imshow(tmp_filter), axis on;
+            pos = pos+1;
+            
+            %imwrite(tmp_filter, sprintf('./im_pyramids_bikeleft/GAUSoct%d_scale%d.jpg', oct, col));
+            %imwrite(DoG, sprintf('./im_pyramids_bikeleft/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     else
         tmp_iml = tmp_iml(1:2:end,1:2:end);
@@ -57,11 +65,18 @@ for oct=1:4
             end
             tmp_filter = imgaussfilt(tmp_iml, sigma, FilterSize=kern);
             DoG = tmp_iml - tmp_filter;
-            imwrite(tmp_filter, sprintf('./im_pyramids_bikeleft/GAUSoct%d_scale%d.jpg', oct, col));
-            imwrite(DoG, sprintf('./im_pyramids_bikeleft/DoG_oct%d_scale%d.jpg', oct, col));
+             
+            subplot(4,5,pos), imshow(tmp_filter), axis on;
+            pos = pos+1;
+          
+            %imwrite(tmp_filter, sprintf('./im_pyramids_bikeleft/GAUSoct%d_scale%d.jpg', oct, col));
+            %imwrite(DoG, sprintf('./im_pyramids_bikeleft/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     end
 end
+
+hold off
+saveas(f1, 'image_pyramids.jpg')
 
 %% Downsampled right
 
@@ -78,8 +93,8 @@ for oct=1:4
             end
             tmp_filt = imgaussfilt(tmp_imr, sigma, FilterSize=kern);
             DoG = tmp_imr - tmp_filt;
-            imwrite(tmp_filt, sprintf('./im_pyramids_bikeright/GAUSoct%d_scale%d.jpg', oct, col));
-            imwrite(DoG, sprintf('./im_pyramids_bikeright/DoG_oct%d_scale%d.jpg', oct, col));
+            %imwrite(tmp_filt, sprintf('./im_pyramids_bikeright/GAUSoct%d_scale%d.jpg', oct, col));
+            %imwrite(DoG, sprintf('./im_pyramids_bikeright/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     else
         tmp_imr = tmp_imr(1:2:end,1:2:end);
@@ -91,8 +106,8 @@ for oct=1:4
             end
             tmp_filt = imgaussfilt(tmp_imr, sigma, FilterSize=kern);
             DoG = tmp_imr - tmp_filt;
-            imwrite(tmp_filt, sprintf('./im_pyramids_bikeright/GAUSoct%d_scale%d.jpg', oct, col));
-            imwrite(DoG, sprintf('./im_pyramids_bikeright/DoG_oct%d_scale%d.jpg', oct, col));
+            %imwrite(tmp_filt, sprintf('./im_pyramids_bikeright/GAUSoct%d_scale%d.jpg', oct, col));
+            %imwrite(DoG, sprintf('./im_pyramids_bikeright/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     end
 end
