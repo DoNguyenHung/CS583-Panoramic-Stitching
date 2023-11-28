@@ -78,7 +78,7 @@ end
 hold off
 saveas(f1, 'image_pyramids.jpg')
 
-%% Downsampled right
+% Downsampled right
 
 tmp_imr = gray_right(:,:);
 tmp_filt = gray_right(:,:);

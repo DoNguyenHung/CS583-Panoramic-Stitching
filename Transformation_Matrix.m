@@ -15,7 +15,7 @@
 % Part 3: Week 4: Keypoints
 
 clear all;
-alpha = 0.3;
+alpha = 0.5;
 
 im_left = imread('bikepath_left.jpg');
 im_right = imread('bikepath_right.jpg');
