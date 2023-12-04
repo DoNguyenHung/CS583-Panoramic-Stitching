@@ -13,6 +13,10 @@ To Review:
 - [X] review blending
 - [ ] RANSAC method
 
+Improvements for Part 2
+- [ ] Choose different correspondences that are more spread out
+- [ ] Instead of doing a 50/50 blend, check to see which image the pixel is closer to to the center to, then maybe do a 60/40 or 70/30 blend.
+
 Maybe meet Saturday 2-3, for checkins 
 
 ** DUE DATE: December 13th, 2023 **
