@@ -7,7 +7,7 @@ To Do:
 - [X] Complete part 3 for image pyramids and difference of Gaussians
 - [X] Start part 5 (Ramona)
 - [X] added part 5 script to git
-- [ ] update part 5 with new local maximas
+- [X] update part 5 with new local maximas
 
 To Review:
 - [ ] review transformation matrix stuff
