@@ -85,10 +85,19 @@ end
 rand = randperm(size(corrs,1),4);
 sample = [corrs(rand(1),:); corrs(rand(2),:); corrs(rand(3),:); corrs(rand(4),:)];
 
-stitched_im = trans_matrix(sample, im_left, im_right);
+transmatrix = find_trans(sample);
+
+% PUT RANSAC TEST HERE
+
+stitched_im = visualize_trans(transmatrix, im_left, im_right);
 
 f5 = figure('Name', 'Stitched Image with Transformation Matrix');
 imshow(stitched_im)
+
+
+
+
+
 
 %% Functions
 
@@ -377,23 +386,15 @@ function fully_reduced = filtered(corr_matrix)
     end
 end
 
-function final_im = trans_matrix(cmatrix, im_left, im_right)
-
-%    cmatrix: the matrix of the randomly sampled correspondences
-%             formated (left y, left x, right y, right x
-    alpha = 0.3;
-    width_right = size(im_right, 2);
-    height_right = size(im_right, 1);
+function M = find_trans(cmatrix)
     
+    %cmatrix: the matrix of the randomly sampled correspondences
+            % formated (left y, left x, right y, right x)
+
     A = [cmatrix(1, :) 1];
     B = [cmatrix(2, :) 1];
     C = [cmatrix(3, :) 1];
     D = [cmatrix(4, :) 1];
-    
-    %Ap = [cmatrix(1, :) 1];
-    %Bp = [cmatrix(2, :) 1];
-    %Cp = [cmatrix(3, :) 1];
-    %Dp = [cmatrix(4, :) 1];
     
     Am = zeros(8, 6);
     Am(1, :) = [A(1) A(2) 1 0 0 0];
@@ -411,6 +412,14 @@ function final_im = trans_matrix(cmatrix, im_left, im_right)
     M = [m(1), m(2), m(3); m(4), m(5), m(6); 0 0 1];
     % Check here:
     % B = inv(M) * Bp';
+end
+
+function final_im = visualize_trans(M, im_left,im_right)
+    % M should be the transformation matrix
+
+    alpha = 0.5;
+    width_right = size(im_right, 2);
+    height_right = size(im_right, 1);
     
     corner1 = [1; 1; 1];
     corner2 = [height_right; 1; 1];
@@ -473,6 +482,5 @@ function final_im = trans_matrix(cmatrix, im_left, im_right)
                 final_im(r, c, 3) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 3) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 3);
             end
         end
-    end
-    
+    end   
 end

@@ -66,8 +66,8 @@ for i = 1:size(corrs, 1)
     together = insertShape(together, "line", [corrs(i, 2), corrs(i, 1), size(left_corr,2)+corrs(i, 4),corrs(i, 3)], ShapeColor=['red'], LineWidth=2,Opacity=1);
 end
 
-%f3 = figure('Name', 'Together');
-%imshow(together);
+f3 = figure('Name', 'Together');
+imshow(together);
 
 % uncomment below to visualize the individual matched correspondences
 %for i = 1:size(corrs, 1)
@@ -86,7 +86,27 @@ end
 rand = randperm(size(corrs,1),4);
 sample = [corrs(rand(1),:); corrs(rand(2),:); corrs(rand(3),:); corrs(rand(4),:)];
 
-stitched_im = trans_matrix(sample, im_left, im_right);
+%Put RANSAC TESTS HERE 
+
+transmatrix = find_trans(sample);
+
+% take left point corr, apply M to that point [y,x] * M = [y',x']
+% comapare to corresponding right point if [y',x'] == [yr,xr] +- 10
+% see if it is within ~10 pixels (we can chose the threshold) 
+% if so 'vote' for that one (ex. 3 vote vs all 5 for the matrix)
+% also have to find a way to sort of 'hold' the good matrix 
+% once we find that matrix then blend
+
+%for the number of ransac tests 
+ %   count here
+  %  for the pts that arent in the sample 
+   %     pts x matrix 
+    %    check the point 
+     %   if match 
+      %      update count 
+    %if count greater than OG count 
+
+stitched_im = visualize_trans(transmatrix, im_left, im_right);
 
 f5 = figure('Name', 'Stitched Image with Transformation Matrix');
 imshow(stitched_im)
@@ -336,23 +356,15 @@ function fully_reduced = filtered(corr_matrix)
     end
 end
 
-function final_im = trans_matrix(cmatrix, im_left, im_right)
-
-%    cmatrix: the matrix of the randomly sampled correspondences
-%             formated (left y, left x, right y, right x
-    alpha = 0.3;
-    width_right = size(im_right, 2);
-    height_right = size(im_right, 1);
+function M = find_trans(cmatrix)
     
+    %cmatrix: the matrix of the randomly sampled correspondences
+            % formated (left y, left x, right y, right x)
+
     A = [cmatrix(1, :) 1];
     B = [cmatrix(2, :) 1];
     C = [cmatrix(3, :) 1];
     D = [cmatrix(4, :) 1];
-    
-    %Ap = [cmatrix(1, :) 1];
-    %Bp = [cmatrix(2, :) 1];
-    %Cp = [cmatrix(3, :) 1];
-    %Dp = [cmatrix(4, :) 1];
     
     Am = zeros(8, 6);
     Am(1, :) = [A(1) A(2) 1 0 0 0];
@@ -370,6 +382,14 @@ function final_im = trans_matrix(cmatrix, im_left, im_right)
     M = [m(1), m(2), m(3); m(4), m(5), m(6); 0 0 1];
     % Check here:
     % B = inv(M) * Bp';
+end
+
+function final_im = visualize_trans(M, im_left,im_right)
+    % M should be the transformation matrix
+
+    alpha = 0.5;
+    width_right = size(im_right, 2);
+    height_right = size(im_right, 1);
     
     corner1 = [1; 1; 1];
     corner2 = [height_right; 1; 1];
@@ -432,6 +452,5 @@ function final_im = trans_matrix(cmatrix, im_left, im_right)
                 final_im(r, c, 3) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 3) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 3);
             end
         end
-    end
-    
+    end   
 end
