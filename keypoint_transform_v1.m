@@ -106,7 +106,54 @@ transmatrix = find_trans(sample);
       %      update count 
     %if count greater than OG count 
 
-stitched_im = visualize_trans(transmatrix, im_left, im_right);
+RANSAC_num = 500000;
+highest_count = 0;
+highest_diff = 100000;
+best_trans_matrix = [];
+trans_thresh = 50;
+
+for i = 1:RANSAC_num
+    rand = randperm(size(corrs,1),4);
+    sample = [corrs(rand(1),:); corrs(rand(2),:); corrs(rand(3),:); corrs(rand(4),:)];
+
+    transmatrix = find_trans(sample);
+    curr_count = 0;
+    curr_diff = 0;
+
+    for j = 1:size(corrs, 1)
+        if ismember(j, rand)
+            continue
+        else
+            current_coords = corrs(j, :);
+
+            curr_right = [current_coords(3); current_coords(4)];
+
+            % Calculates right coordinates from left coordinates and trans
+            % matrix
+            trans_right = (inv(transmatrix)) * [current_coords(1); current_coords(2); 1];
+
+            if ((curr_right(1, 1) - trans_thresh < trans_right(1, 1)) && (trans_right(1, 1) < curr_right(1, 1) + trans_thresh)) && ((curr_right(2, 1) - trans_thresh < trans_right(2, 1)) && (trans_right(2, 1) < curr_right(2, 1) + trans_thresh))
+                % Adds vote and difference
+                curr_count = curr_count + 1;
+                curr_diff = curr_diff + abs(curr_right(1, 1) - trans_right(1, 1)) + abs(curr_right(2, 1) - trans_right(2, 1));
+            end
+        end
+    end
+
+    % Gets best trans matrix based on vote and difference
+    if curr_count > highest_count
+        highest_count = curr_count;
+        best_trans_matrix = transmatrix;
+        highest_diff = curr_diff;
+    
+    elseif curr_count == highest_count && curr_diff < highest_diff
+        best_trans_matrix = transmatrix;
+        highest_diff = curr_diff;
+    end
+end
+
+% stitched_im = visualize_trans(transmatrix, im_left, im_right);
+stitched_im = visualize_trans(best_trans_matrix, im_left, im_right);
 
 f5 = figure('Name', 'Stitched Image with Transformation Matrix');
 imshow(stitched_im)
