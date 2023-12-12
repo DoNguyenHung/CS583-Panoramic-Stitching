@@ -2,8 +2,8 @@
 
 Hung Do: <hd386@drexel.edu> <br>
 Ramona Rubalcava: <rlr92@drexel.edu>
----
 
+---
 ## Code Usage:
 
 These matlab scripts were written for the purpose of completing the final project for CS 583
