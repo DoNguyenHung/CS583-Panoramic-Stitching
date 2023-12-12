@@ -83,12 +83,12 @@ imshow(together);
 %% RANSAC
 
 % creating the random sample of 4 correspondences 
-rand = randperm(size(corrs,1),4);
-sample = [corrs(rand(1),:); corrs(rand(2),:); corrs(rand(3),:); corrs(rand(4),:)];
+% rand = randperm(size(corrs,1),4);
+% sample = [corrs(rand(1),:); corrs(rand(2),:); corrs(rand(3),:); corrs(rand(4),:)];
 
 %Put RANSAC TESTS HERE 
 
-transmatrix = find_trans(sample);
+% transmatrix = find_trans(sample);
 
 % take left point corr, apply M to that point [y,x] * M = [y',x']
 % comapare to corresponding right point if [y',x'] == [yr,xr] +- 10
@@ -106,11 +106,11 @@ transmatrix = find_trans(sample);
       %      update count 
     %if count greater than OG count 
 
-RANSAC_num = 500000;
+RANSAC_num = 100000;
 highest_count = 0;
 highest_diff = 100000;
 best_trans_matrix = [];
-trans_thresh = 50;
+trans_thresh = 10;
 
 for i = 1:RANSAC_num
     rand = randperm(size(corrs,1),4);
@@ -126,11 +126,9 @@ for i = 1:RANSAC_num
         else
             current_coords = corrs(j, :);
 
-            curr_right = [current_coords(3); current_coords(4)];
+            curr_right = [current_coords(1); current_coords(2)];
 
-            % Calculates right coordinates from left coordinates and trans
-            % matrix
-            trans_right = (inv(transmatrix)) * [current_coords(1); current_coords(2); 1];
+            trans_right = (inv(transmatrix)) * [current_coords(3); current_coords(4); 1];
 
             if ((curr_right(1, 1) - trans_thresh < trans_right(1, 1)) && (trans_right(1, 1) < curr_right(1, 1) + trans_thresh)) && ((curr_right(2, 1) - trans_thresh < trans_right(2, 1)) && (trans_right(2, 1) < curr_right(2, 1) + trans_thresh))
                 % Adds vote and difference
@@ -145,7 +143,7 @@ for i = 1:RANSAC_num
         highest_count = curr_count;
         best_trans_matrix = transmatrix;
         highest_diff = curr_diff;
-    
+
     elseif curr_count == highest_count && curr_diff < highest_diff
         best_trans_matrix = transmatrix;
         highest_diff = curr_diff;
@@ -156,7 +154,7 @@ end
 stitched_im = visualize_trans(best_trans_matrix, im_left, im_right);
 
 f5 = figure('Name', 'Stitched Image with Transformation Matrix');
-imshow(stitched_im)
+imshow(stitched_im);
 
 %% Functions
 
@@ -412,6 +410,8 @@ function M = find_trans(cmatrix)
     B = [cmatrix(2, :) 1];
     C = [cmatrix(3, :) 1];
     D = [cmatrix(4, :) 1];
+    % disp(B);
+    % disp("-");
     
     Am = zeros(8, 6);
     Am(1, :) = [A(1) A(2) 1 0 0 0];
@@ -427,6 +427,9 @@ function M = find_trans(cmatrix)
     m = inv(Am' * Am) * Am' * b;
     
     M = [m(1), m(2), m(3); m(4), m(5), m(6); 0 0 1];
+
+    % Bp = [B(3), B(4), 1];
+    % disp(inv(M) * Bp');
     % Check here:
     % B = inv(M) * Bp';
 end
