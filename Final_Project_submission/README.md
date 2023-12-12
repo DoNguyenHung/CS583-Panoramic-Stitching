@@ -1,4 +1,4 @@
-# CS 583 Final Project: Panoramix Stitching
+# CS 583 Final Project: Panoramic Stitching
 
 Hung Do: <hd386@drexel.edu> <br>
 Ramona Rubalcava: <rlr92@drexel.edu>
