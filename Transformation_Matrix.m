@@ -127,20 +127,18 @@ for r = 1:size(final_im, 1)
         end
 
         if useLeftIm == 1 && useRightIm == 0
-            % disp(leftloc);
-            % disp("\\")
             final_im(r, c, 1) = im_left(int32(otherloc(1)), int32(otherloc(2)), 1);
             final_im(r, c, 2) = im_left(int32(otherloc(1)), int32(otherloc(2)), 2);
             final_im(r, c, 3) = im_left(int32(otherloc(1)), int32(otherloc(2)), 3);
         end
 
         if useLeftIm == 1 && useRightIm == 1
-            diff_left = abs(centerLeft(1) - int32(otherloc(1))) + abs(centerLeft(2) - int32(otherloc(2)));
-            diff_right = abs(centerRight(1) - int32(otherloc(1))) + abs(centerRight(2) - int32(otherloc(2)));
+            diff_left = abs(centerLeft(1) - r) + abs(centerLeft(2) - c);
+            diff_right = abs(centerRight(1) - r) + abs(centerRight(2) - c);
             if diff_left < diff_right
-                alpha = 0.7;
+                alpha = 0.6;
             else
-                alpha = 0.3;
+                alpha = 0.4;
             end
            
             final_im(r, c, 1) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 1) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 1);
