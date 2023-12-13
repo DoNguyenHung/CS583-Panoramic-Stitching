@@ -85,9 +85,6 @@ imshow(together);
 % creating the random sample of 4 correspondences 
 % rand = randperm(size(corrs,1),4);
 % sample = [corrs(rand(1),:); corrs(rand(2),:); corrs(rand(3),:); corrs(rand(4),:)];
-
-%Put RANSAC TESTS HERE 
-
 % transmatrix = find_trans(sample);
 
 % take left point corr, apply M to that point [y,x] * M = [y',x']
@@ -96,15 +93,6 @@ imshow(together);
 % if so 'vote' for that one (ex. 3 vote vs all 5 for the matrix)
 % also have to find a way to sort of 'hold' the good matrix 
 % once we find that matrix then blend
-
-%for the number of ransac tests 
- %   count here
-  %  for the pts that arent in the sample 
-   %     pts x matrix 
-    %    check the point 
-     %   if match 
-      %      update count 
-    %if count greater than OG count 
 
 RANSAC_num = 100000;
 highest_count = 0;
@@ -366,8 +354,10 @@ function fully_reduced = filtered(corr_matrix)
     for i=1:size(temp, 1)
         if i==1
             if temp(i, 1) == temp(i+1,1)
-                if temp(i,5) > temp(1,1)
+                if temp(i,5) > temp(i+1,5)
                     reduced = cat(1, reduced, temp(i,:)); 
+                else
+                    reduced = cat(1, reduced, temp(i+1,:)); 
                 end
             else
                 reduced = cat(1, reduced, temp(i,:));
@@ -386,7 +376,9 @@ function fully_reduced = filtered(corr_matrix)
         if j==1
             if sorted(j, 3) == sorted(j+1,3)
                 if sorted(j,5) > sorted(j+1,5)
-                    fully_filtered = cat(1, fully_filtered, sorted(j,:)); 
+                    fully_reduced = cat(1, fully_reduced, sorted(j,:));
+                else
+                    fully_reduced = cat(1, fully_reduced, sorted(j+1,:));
                 end
             else
                 fully_reduced = cat(1, fully_reduced, sorted(j,:));
