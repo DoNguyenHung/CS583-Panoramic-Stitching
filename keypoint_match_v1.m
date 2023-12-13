@@ -26,25 +26,6 @@ edge_right = find_edge(gray_right);
 [pruned_left, pm_left] = pruned_max(gray_left, max_left, stdev_l, window_l, edge_left);
 [pruned_right, pm_right]= pruned_max(gray_right, max_right, stdev_r, window_r, edge_right);
 
-%% Display Points
-%gray_left_maximas = gray_left(:, :);
-%for i = 1:size(max_left, 1)
-%    gray_left_maximas = insertShape(gray_left_maximas, "circle", [max_left(i, 2),max_left(i, 1), 5], ShapeColor=['red'], Opacity=1);
-%end
-%
-%f1 = figure('Name', 'Extremas Before and After Pruning: Left');
-%subplot(1, 2, 1), imshow(gray_left_maximas), title('All Extremas');
-%subplot(1, 2, 2), imshow(pruned_left), title('Pruned Extremas');
-%
-%gray_right_maximas = gray_right(:, :);
-%for i = 1:size(max_right, 1)
-%    gray_right_maximas = insertShape(gray_right_maximas, "circle", [max_right(i, 2),max_right(i, 1), 5], ShapeColor=['red'], Opacity=1);
-%end
-%
-%f2 = figure('Name', 'Extremas Before and After Pruning: Right');
-%subplot(1, 2, 1), imshow(gray_right_maximas), title('All Extremas');
-%subplot(1, 2, 2), imshow(pruned_right), title('Pruned Extremas');
-
 %% Point Correspondences
 
 % this returns the similarities for the left and right images 
@@ -68,16 +49,6 @@ end
 
 f8 = figure('Name', 'Together');
 imshow(together);
-
-% uncomment below to visualize the individual matched correspondences
-%for i = 1:size(corrs, 1)
- %   left_corr = insertShape(left_corr, "circle", [corrs(i, 2),corrs(i, 1), 5], ShapeColor=['green'], Opacity=1);
- %   right_corr = insertShape(right_corr, "circle", [corrs(i, 4),corrs(i, 3), 5], ShapeColor=['green'], Opacity=1);
-%end
-
-%f1 = figure('Name', 'Extremas found in both left and right images');
-%subplot(1, 2, 1), imshow(left_corr), title('left correspondences');
-%subplot(1, 2, 2), imshow(right_corr), title('right correspondences');
 
 %% Functions
 

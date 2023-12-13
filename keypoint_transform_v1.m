@@ -1,13 +1,13 @@
 %% Reading in the image file
 clear all;
 
-% im_left = double(imread('bikepath_left_resized.jpg'))/255; 
-% im_left = imresize(im_left, 0.6); 
-im_left = double(imread('sample_left.jpg'))/255; 
+im_left = double(imread('bikepath_left_resized.jpg'))/255; 
+im_left = imresize(im_left, 0.6); 
+% im_left = double(imread('sample_left.jpg'))/255; 
 
-% im_right = double(imread('bikepath_right_resized.jpg'))/255; 
-% im_right = imresize(im_right, 0.6);
-im_right = double(imread('sample_right.jpg'))/255; 
+im_right = double(imread('bikepath_right_resized.jpg'))/255; 
+im_right = imresize(im_right, 0.6);
+% im_right = double(imread('sample_right.jpg'))/255; 
 
 %% Grayscale
 gray_left = rgb2gray(im_left);
@@ -25,25 +25,6 @@ edge_right = find_edge(gray_right);
 
 [pruned_left, pm_left] = pruned_max(gray_left, max_left, stdev_l, window_l, edge_left);
 [pruned_right, pm_right]= pruned_max(gray_right, max_right, stdev_r, window_r, edge_right);
-
-%% Display Points
-%gray_left_maximas = gray_left(:, :);
-%for i = 1:size(max_left, 1)
-%    gray_left_maximas = insertShape(gray_left_maximas, "circle", [max_left(i, 2),max_left(i, 1), 5], ShapeColor=['red'], Opacity=1);
-%end
-%
-%f1 = figure('Name', 'Extremas Before and After Pruning: Left');
-%subplot(1, 2, 1), imshow(gray_left_maximas), title('All Extremas');
-%subplot(1, 2, 2), imshow(pruned_left), title('Pruned Extremas');
-%
-%gray_right_maximas = gray_right(:, :);
-%for i = 1:size(max_right, 1)
-%    gray_right_maximas = insertShape(gray_right_maximas, "circle", [max_right(i, 2),max_right(i, 1), 5], ShapeColor=['red'], Opacity=1);
-%end
-%
-%f2 = figure('Name', 'Extremas Before and After Pruning: Right');
-%subplot(1, 2, 1), imshow(gray_right_maximas), title('All Extremas');
-%subplot(1, 2, 2), imshow(pruned_right), title('Pruned Extremas');
 
 %% Point Correspondences
 
@@ -68,17 +49,6 @@ end
 
 f3 = figure('Name', 'Together');
 imshow(together);
-
-% uncomment below to visualize the individual matched correspondences
-%for i = 1:size(corrs, 1)
- %   left_corr = insertShape(left_corr, "circle", [corrs(i, 2),corrs(i, 1), 5], ShapeColor=['green'], Opacity=1);
- %   right_corr = insertShape(right_corr, "circle", [corrs(i, 4),corrs(i, 3), 5], ShapeColor=['green'], Opacity=1);
-%end
-
-%f4 = figure('Name', 'Extremas found in both left and right images');
-%subplot(1, 2, 1), imshow(left_corr), title('left correspondences');
-%subplot(1, 2, 2), imshow(right_corr), title('right correspondences');
-
 
 %% RANSAC
 
@@ -138,7 +108,6 @@ for i = 1:RANSAC_num
     end
 end
 
-% stitched_im = visualize_trans(transmatrix, im_left, im_right);
 stitched_im = visualize_trans(best_trans_matrix, im_left, im_right);
 
 f5 = figure('Name', 'Stitched Image with Transformation Matrix');
@@ -254,15 +223,12 @@ function [pruned_im, pruned_maximas] = pruned_max(im, maximas, stdev_s, windowSi
     for i = 1:size(maximas, 1)
         if maximas(i, 1) <= int32(windowSize / 2) || maximas(i, 2) <= int32(windowSize / 2) || maximas(i, 1) > size(pruned_im, 1) - int32(windowSize / 2) || maximas(i, 2) > size(pruned_im, 2) - int32(windowSize / 2)
             count_border = count_border + 1;
-            %pruned_maximas(i, 3) = 1; % added this
             continue
         elseif is_edge(i) == 1
             count_edge = count_edge + 1;
-            %pruned_maximas(i, 3) = 1; % added this
             continue
         elseif stdev_s(i) < threshold
             count_std = count_std + 1;
-            %pruned_maximas(i, 3) = 1; % added this
             continue
         end
 
@@ -296,10 +262,8 @@ function [left2right, right2left] = keypoints(imagel, imager, pruned_m1, pruned_
                 % the pixel to calc the 9x9 region
                 if (lefty > 4 & (lefty < size(imagel,1)-4)) & (leftx > 4 & (leftx < size(imagel,2)-4))
                     if (righty > 4 & (righty < size(imager,1)-4)) & (rightx > 4 & (rightx < size(imager,2)-4))
-                        %sprintf('left y:%d, x:%d',lefty,leftx)
                         region_lft = imagel(lefty-4:lefty+4, leftx-4:leftx+4,:);
                         flatleft = reshape(region_lft, [1,243]);
-                        %sprintf('right y:%d, x:%d',righty,rightx)
                         region_rgt = imager(righty-4:righty+4, rightx-4:rightx+4,:);
                         flatright = reshape(region_rgt, [1,243]);
 
@@ -420,8 +384,6 @@ function M = find_trans(cmatrix)
     
     M = [m(1), m(2), m(3); m(4), m(5), m(6); 0 0 1];
 
-    % Bp = [B(3), B(4), 1];
-    % disp(inv(M) * Bp');
     % Check here:
     % B = inv(M) * Bp';
 end
@@ -465,30 +427,22 @@ function final_im = visualize_trans(M, im_left,im_right)
     
             canvasloc = [r; c; 1];
             baseloc = canvasloc + [miny - 1; minx - 1; 0];
-            % disp(baseloc);
-            % disp("\\")
     
             if baseloc(1) >= 1 && baseloc(2) >= 1 && baseloc(2) <= size(im_right, 2) && baseloc(1) <= size(im_right, 1)
                 useRightIm = 1;
             end
     
             otherloc = (inv(M)) * baseloc;
-            % disp(otherloc);
-            % disp("\\")
             if otherloc(1) < 1 || otherloc(2) < 1 || otherloc(1) > size(im_left, 1) || otherloc(2) > size(im_left, 2)
                 useLeftIm = 0;
             end
     
             if useRightIm == 1 && useLeftIm == 0
-                % disp(baseloc);
-                % disp("\\")
                 final_im(r, c, 1) = im_right(int32(baseloc(1)), int32(baseloc(2)), 1);
                 final_im(r, c, 2) = im_right(int32(baseloc(1)), int32(baseloc(2)), 2);
                 final_im(r, c, 3) = im_right(int32(baseloc(1)), int32(baseloc(2)), 3);
             end
             if useLeftIm == 1 && useRightIm == 0
-                % disp(leftloc);
-                % disp("\\")
                 final_im(r, c, 1) = im_left(int32(otherloc(1)), int32(otherloc(2)), 1);
                 final_im(r, c, 2) = im_left(int32(otherloc(1)), int32(otherloc(2)), 2);
                 final_im(r, c, 3) = im_left(int32(otherloc(1)), int32(otherloc(2)), 3);

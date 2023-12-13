@@ -83,10 +83,6 @@ for oct=1:4
        end 
     end
 
-    % disp("Done octave");
-    % disp(oct);
-    % disp("\\");
-
     % Find local maximas
     for i = 2:4
         curr_DoG = [];
@@ -104,8 +100,6 @@ for oct=1:4
             curr_DoG(:, :, 3) = DoG_5;
         end
 
-        % for r = 2:size(curr_DoG, 1) - 1
-        %     for c = 2:size(curr_DoG, 2) - 1
         for r = 4:size(curr_DoG, 1) - 3
             for c = 4:size(curr_DoG, 2) - 3
                 temp = curr_DoG(r-3:r+3, c-3:c+3, :);
@@ -125,10 +119,6 @@ for oct=1:4
                 end
             end
         end
-
-        % disp('Done DoG');
-        % disp(i);
-        % disp("\\");
     end
 end
 
@@ -144,8 +134,6 @@ for r = 1:size(edge_left, 1)
     end
 end
 
-% disp('Done edge pixels')
-
 %% Display all extrema points
 gray_left_maximas = gray_left(:, :);
 for i = 1:size(maximas, 1)
@@ -153,7 +141,6 @@ for i = 1:size(maximas, 1)
 end
 
 subplot(1, 2, 1), imshow(gray_left_maximas), title('All Extremas');
-% disp('Done all extremas');
 
 %% Display pruned extrema points
 gray_left_pruned = gray_left(:, :);
