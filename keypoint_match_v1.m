@@ -98,7 +98,7 @@ function [maximas, stdev_s, windowSize] = scale_max(im, scales)
     % Find maximas for all octaves and superimpose on the 1st octave (3 x 3)
     tmp_im = im(:,:);
     tmp_filter = im(:,:);
-    windowSize = int32(size(im, 2) / 50);
+    windowSize = int32(size(im, 2) / 80);
     
     maximas = [];
     stdev_s = [];

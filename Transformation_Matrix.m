@@ -136,9 +136,9 @@ for r = 1:size(final_im, 1)
             diff_left = abs(centerLeft(1) - r) + abs(centerLeft(2) - c);
             diff_right = abs(centerRight(1) - r) + abs(centerRight(2) - c);
             if diff_left < diff_right
-                alpha = 0.6;
+                alpha = 0.7;
             else
-                alpha = 0.4;
+                alpha = 0.3;
             end
            
             final_im(r, c, 1) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 1) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 1);

@@ -28,7 +28,7 @@ end
 % Find maximas for all octaves and superimpose on the 1st octave (3 x 3)
 tmp_iml = gray_left(:,:);
 tmp_filter = gray_left(:,:);
-windowSize = int32(size(gray_left, 2) / 50);
+windowSize = int32(size(gray_left, 2) / 80);
 
 maximas = [];
 stdev_s = [];

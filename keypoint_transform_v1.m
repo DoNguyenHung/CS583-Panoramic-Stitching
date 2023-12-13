@@ -163,8 +163,8 @@ function [maximas, stdev_s, windowSize] = scale_max(im, scales)
     % Find maximas for all octaves and superimpose on the 1st octave (3 x 3)
     tmp_im = im(:,:);
     tmp_filter = im(:,:);
-    windowSize = int32(size(im, 2) / 50);
-    
+    windowSize = int32(size(im, 2) / 80);
+
     maximas = [];
     stdev_s = [];
     
@@ -494,13 +494,13 @@ function final_im = visualize_trans(M, im_left,im_right)
                 final_im(r, c, 3) = im_left(int32(otherloc(1)), int32(otherloc(2)), 3);
             end
             if useLeftIm == 1 && useRightIm == 1
-                % diff_left = abs(centerLeft(1) - r) + abs(centerLeft(2) - c);
-                % diff_right = abs(centerRight(1) - r) + abs(centerRight(2) - c);
-                % if diff_left < diff_right
-                %     alpha = 0.7;
-                % else
-                %     alpha = 0.3;
-                % end
+                diff_left = abs(centerLeft(1) - r) + abs(centerLeft(2) - c);
+                diff_right = abs(centerRight(1) - r) + abs(centerRight(2) - c);
+                if diff_left < diff_right
+                    alpha = 0.7;
+                else
+                    alpha = 0.3;
+                end
 
                 final_im(r, c, 1) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 1) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 1);
                 final_im(r, c, 2) = alpha * im_left(int32(otherloc(1)), int32(otherloc(2)), 2) + (1 - alpha) * im_right(int32(baseloc(1)), int32(baseloc(2)), 2);
