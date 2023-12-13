@@ -1,13 +1,13 @@
 %% Reading in the image file
 clear all;
 
-im_left = double(imread('bikepath_left_resized.jpg'))/255; 
-im_left = imresize(im_left, 0.6); 
-% im_left = double(imread('sample_left.jpg'))/255; 
+% im_left = double(imread('bikepath_left_resized.jpg'))/255; 
+% im_left = imresize(im_left, 0.6); 
+im_left = double(imread('sample_left.jpg'))/255; 
 
-im_right = double(imread('bikepath_right_resized.jpg'))/255; 
-im_right = imresize(im_right, 0.6);
-% im_right = double(imread('sample_right.jpg'))/255; 
+% im_right = double(imread('bikepath_right_resized.jpg'))/255; 
+% im_right = imresize(im_right, 0.6);
+im_right = double(imread('sample_right.jpg'))/255; 
 
 %% Grayscale
 gray_left = rgb2gray(im_left);
