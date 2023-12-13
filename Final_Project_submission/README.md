@@ -30,6 +30,8 @@ Included in the submission folder are previously generated images from running t
 
 To recreate the results of this submission, .... NEED TO ADD TO THIS
 
+Display Points
+
 If overwritting or generating new images is necessary uncomment the saveas commands. 
 
 ---
