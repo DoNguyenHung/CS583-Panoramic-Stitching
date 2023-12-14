@@ -2,37 +2,6 @@
 
 Hung Do: <hd386@drexel.edu> <br>
 Ramona Rubalcava: <rlr92@drexel.edu>
-
----
-## Code Usage:
-
-These matlab scripts were written for the purpose of completing the final project for CS 583
-
-#### - Data:
-
-The data used for this assignment were the two images, bikepath_left.jpg and bikepath_right.jpg. Both were personally taken and are not from a website.
-
-#### - Folder structure:
-
-The file structure is as follows:
-
-> Final_Project_submission <br>
-> ├── <br>
-> ├── <br>
-> ├── <br>
-> ├── <br>
-> ├── <br>
-> └── <br>
-
-Included in the submission folder are previously generated images from running the matlab scripts, these can be found in the folder 'previously_generated_images'. 
-
-#### - Running the code:
-
-To recreate the results of this submission, # CS 583 Final Project: Panoramic Stitching
-
-Hung Do: <hd386@drexel.edu> <br>
-Ramona Rubalcava: <rlr92@drexel.edu>
-
 ---
 ## Code Usage:
 
@@ -47,12 +16,12 @@ The data used for this assignment were the two images, bikepath_left.jpg and bik
 The file structure is as follows:
 
 > Final_Project_submission <br>
-> ├── <br>
-> ├── <br>
-> ├── <br>
-> ├── <br>
-> ├── <br>
-> └── <br>
+> ├── intermediate_scripts - folder holding all the intermediate scripts that satisfy parts 1 -5 <br>
+> ├── bikepath_left.jpg - left image used in stitching <br>
+> ├── bikepath_left_resized.jpg- resized image of original image <br>
+> ├── bikepath_right.jpg - right image used in stitching <br>
+> ├── bikepath_right_resized.jpg - resized image of original image <br>
+> └── keypoint_transform.m - matlab script with all parts combined<br>
 
 Included in the submission folder are previously generated images from running the matlab scripts, these can be found in the folder 'previously_generated_images'. 
 
