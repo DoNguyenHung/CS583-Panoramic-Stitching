@@ -28,7 +28,7 @@ Included in the submission folder are previously generated images from running t
 
 #### - Running the code:
 
-To recreate the results of this submission, .... NEED TO ADD TO THIS
+To recreate the results of this submission, simply run the scripts submitted. part 1 can be found in point_correspondences.m, part 2 can be found in Transformation_Matrix.m, part 3 can be found in image_pyramids.m, part 4 can be found in Local_Maximas.m, part 5 can be found in keypoint_match.m, and part 6 can be found in keypoint_transform.m. The images can be placed in root and everything should run.
 
 Display Points
 
