@@ -125,7 +125,7 @@ stitched_im = visualize_trans(best_trans_matrix, im_left, im_right);
 
 f5 = figure('Name', 'Stitched Image with Transformation Matrix');
 imshow(stitched_im);
-imwrite(stitched_im,'stitched_im.jpg')
+%imwrite(stitched_im,'stitched_im.jpg')
 
 %% Plot Best Correspondences
 
@@ -137,9 +137,9 @@ for i = 1:size(best_corrs, 1)
     best = insertShape(best, "line", [best_corrs(i, 2), best_corrs(i, 1), size(left_best,2)+best_corrs(i, 4),best_corrs(i, 3)], ShapeColor=['red'], LineWidth=2,Opacity=1);
 end
 
-f6 = figure('Name', 'Together Best');
-imshow(best);
-imwrite(best, 'together_best.jpg')
+%f6 = figure('Name', 'Together Best');
+%imshow(best);
+%imwrite(best, 'together_best.jpg')
 
 
 %% Functions
