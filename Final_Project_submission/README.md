@@ -1,7 +1,10 @@
 # CS 583 Final Project: Panoramic Stitching
 
 Hung Do: <hd386@drexel.edu> <br>
-Ramona Rubalcava: <rlr92@drexel.edu>
+Ramona Rubalcava: <rlr92@drexel.edu> <br>
+
+This work is split evenly between Hung and Ramona.
+
 ---
 ## Code Usage:
 
