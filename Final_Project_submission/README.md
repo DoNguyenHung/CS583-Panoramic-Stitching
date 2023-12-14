@@ -17,13 +17,12 @@ The file structure is as follows:
 
 > Final_Project_submission <br>
 > ├── intermediate_scripts - folder holding all the intermediate scripts that satisfy parts 1 -5 <br>
+> ├── previously_generated_images - folder holding all previously generated images from running the scripts <br>
 > ├── bikepath_left.jpg - left image used in stitching <br>
 > ├── bikepath_left_resized.jpg- resized image of original image <br>
 > ├── bikepath_right.jpg - right image used in stitching <br>
 > ├── bikepath_right_resized.jpg - resized image of original image <br>
 > └── keypoint_transform.m - matlab script with all parts combined<br>
-
-Included in the submission folder are previously generated images from running the matlab scripts, these can be found in the folder 'previously_generated_images'. 
 
 #### - Running the code:
 
