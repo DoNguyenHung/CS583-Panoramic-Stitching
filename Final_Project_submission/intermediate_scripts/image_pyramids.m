@@ -2,21 +2,13 @@
 clear all;
 
 im_left = double(imread('bikepath_left_resized.jpg'))/255; 
-%f1 = figure('Name', 'Bike Path Left');
-%imshow(im_left)
 
 im_right = double(imread('bikepath_right_resized.jpg'))/255; 
-%f2 = figure('Name', 'Bike Path Right');
-%imshow(im_right)
 
 %% Grayscale
 
 gray_left = rgb2gray(im_left);
 gray_right = rgb2gray(im_right);
-
-%f3 = figure('Name', 'Bike Path Grays');
-%subplot(1,2,1), imshow(gray_left);
-%subplot(1,2,2), imshow(gray_right);
 
 %% Calculate Scales
 init_sig = 1.6; 
@@ -52,8 +44,6 @@ for oct=1:4
             subplot(4,5,pos), imshow(tmp_filter), axis on;
             pos = pos+1;
             
-            %imwrite(tmp_filter, sprintf('./im_pyramids_bikeleft/GAUSoct%d_scale%d.jpg', oct, col));
-            %imwrite(DoG, sprintf('./im_pyramids_bikeleft/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     else
         tmp_iml = tmp_iml(1:2:end,1:2:end);
@@ -69,8 +59,6 @@ for oct=1:4
             subplot(4,5,pos), imshow(tmp_filter), axis on;
             pos = pos+1;
           
-            %imwrite(tmp_filter, sprintf('./im_pyramids_bikeleft/GAUSoct%d_scale%d.jpg', oct, col));
-            %imwrite(DoG, sprintf('./im_pyramids_bikeleft/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     end
 end
@@ -93,8 +81,6 @@ for oct=1:4
             end
             tmp_filt = imgaussfilt(tmp_imr, sigma, FilterSize=kern);
             DoG = tmp_imr - tmp_filt;
-            %imwrite(tmp_filt, sprintf('./im_pyramids_bikeright/GAUSoct%d_scale%d.jpg', oct, col));
-            %imwrite(DoG, sprintf('./im_pyramids_bikeright/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     else
         tmp_imr = tmp_imr(1:2:end,1:2:end);
@@ -106,8 +92,6 @@ for oct=1:4
             end
             tmp_filt = imgaussfilt(tmp_imr, sigma, FilterSize=kern);
             DoG = tmp_imr - tmp_filt;
-            %imwrite(tmp_filt, sprintf('./im_pyramids_bikeright/GAUSoct%d_scale%d.jpg', oct, col));
-            %imwrite(DoG, sprintf('./im_pyramids_bikeright/DoG_oct%d_scale%d.jpg', oct, col));
         end 
     end
 end
